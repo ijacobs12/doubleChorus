@@ -56,21 +56,20 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    float getParameter(int index);
-    void setParameter(int index, float newValue);
+    float get_Parameter(int index);
+    void set_Parameter(int index, float newValue);
     enum Parameters
     {
-        delayParam = 0,
-        feedbackParam,
-        modParam,
         mixParam,
+        widthParam,
+        rateParam,
         totalNumParams
     };
 private:
     Oscillator leftOsc, rightOsc;
     FractionalDelayBuffer leftBuffer, rightBuffer;
     float leftDelayTime, rightDelayTime;
-    float parameters[4];
+    float parameters[3];
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A_chorus_linesAudioProcessor)
 };

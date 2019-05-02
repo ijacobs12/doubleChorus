@@ -101,28 +101,28 @@ void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samples
     leftOsc.setSampleRate(sampleRate);
     rightOsc.setFrequency(0.5);
     rightOsc.setSampleRate(sampleRate);
-    leftDelayTime = getParameter(((delayParam*.004)+.005) * sampleRate);
-    rightDelayTime = getParameter(((delayParam*.003)+.005) * sampleRate);
+    set_Parameter(mixParam, 0); 
+    set_Parameter(widthParam, 0);
+    set_Parameter(rateParam, 1);
+    
 }
 
-float A_chorus_linesAudioProcessor::getParameter(int index)
+float A_chorus_linesAudioProcessor::get_Parameter(int index)
 {
     switch (index) {
-        case delayParam: return parameters[0];
-        case feedbackParam: return parameters[1];
-        case modParam: return parameters[2];
-        case mixParam: return parameters [3];
+        case mixParam: return parameters[0];
+        case widthParam: return parameters[1];
+        case rateParam: return parameters[2];
         default: return 0.0f;
     }
 }
 
-void A_chorus_linesAudioProcessor::setParameter(int index, float newValue)
+void A_chorus_linesAudioProcessor::set_Parameter(int index, float newValue)
 {
     switch (index) {
-        case delayParam: parameters[0] = newValue; break;
-        case feedbackParam: parameters[1] = newValue; break;
-        case modParam:  parameters[2] = newValue; break;
-        case mixParam:  parameters [3] = newValue; break;
+        case mixParam: parameters[0] = newValue; break;
+        case widthParam: parameters[1] = newValue; break;
+        case rateParam:  parameters[2] = newValue; break;
         default: break;
     }
 }
@@ -166,24 +166,33 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     else {
     for (int i = 0; i < buffer.getNumSamples(); i++)
     {
-        float leftMod = (leftOsc.nextSample()+1)*getParameter(modParam)*100;
-        float rightMod = (rightOsc.nextSample()+1)*getParameter(modParam)*100;
+        for (int channel = 0; channel < buffer.getNumChannels(); channel ++)
+        {
+            //chorus magic here
+            
+            
+            /*float leftMod = (leftOsc.nextSample()+1)*get_Parameter(modParam)*100;
+            float rightMod = (rightOsc.nextSample()+1)*get_Parameter(modParam)*100;
+            
+            leftDelayTime = get_Parameter(delayParam)*200 + leftMod + .002;
+            rightDelayTime = get_Parameter(delayParam)*200 + rightMod + .0015;
+            
+            float l_xn = buffer.getReadPointer(0)[i];
+            float r_xn = buffer.getReadPointer(1)[i];
+            
+            float l_yn = leftBuffer.getSample(leftDelayTime);
+            float r_yn = rightBuffer.getSample(rightDelayTime);
+            
+            float l_combined = l_xn + r_yn*get_Parameter(feedbackParam);
+            float r_combined = r_xn + l_yn*get_Parameter(feedbackParam);
+            leftBuffer.addSample(l_combined);
+            rightBuffer.addSample(r_combined);
+            buffer.getWritePointer(0)[i] = l_xn*(1-get_Parameter(mixParam)) + l_yn*get_Parameter(mixParam);
+            buffer.getWritePointer(1)[i] = r_xn*(1-get_Parameter(mixParam)) + r_yn*get_Parameter(mixParam);*/
+            
+            
+        }
         
-        leftDelayTime = getParameter(delayParam)*200 + leftMod + .002;
-        rightDelayTime = getParameter(delayParam)*200 + rightMod + .0015;
-        
-        float l_xn = buffer.getReadPointer(0)[i];
-        float r_xn = buffer.getReadPointer(1)[i];
-        
-        float l_yn = leftBuffer.getSample(leftDelayTime);
-        float r_yn = rightBuffer.getSample(rightDelayTime);
-        
-        float l_combined = l_xn + r_yn*getParameter(feedbackParam);
-        float r_combined = r_xn + l_yn*getParameter(feedbackParam);
-        leftBuffer.addSample(l_combined);
-        rightBuffer.addSample(r_combined);
-        buffer.getWritePointer(0)[i] = l_xn*(1-getParameter(mixParam)) + l_yn*getParameter(mixParam);
-        buffer.getWritePointer(1)[i] = r_xn*(1-getParameter(mixParam)) + r_yn*getParameter(mixParam);
         
     }
     }

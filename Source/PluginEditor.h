@@ -29,7 +29,7 @@ public:
 
 
 private:
-        Slider delay, feedback, mod, mix;
+        Slider mixSlider, widthSlider, rateSlider;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     A_chorus_linesAudioProcessor& processor;

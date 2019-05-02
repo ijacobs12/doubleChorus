@@ -19,37 +19,32 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     // editor's size to whatever you need it to be.
     setSize (590, 300);
     
-    addAndMakeVisible(delay);
-    delay.setSliderStyle(Slider::RotaryVerticalDrag);
-    delay.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    delay.setBounds(46,125,94,94);
-    delay.setRange(0, 1,.01);
-    delay.addListener(this);
-    delay.setValue(getAudioProcessor()->getParameter(A_chorus_linesAudioProcessor::delayParam),dontSendNotification);
+    addAndMakeVisible(mixSlider);
+    mixSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    mixSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    mixSlider.setBounds(46,125,94,94);
+    mixSlider.setRange(0, 1,.01);
+    mixSlider.addListener(this);
+    mixSlider.setValue(0);
     
-    addAndMakeVisible(feedback);
-    feedback.setSliderStyle(Slider::RotaryVerticalDrag);
-    feedback.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    feedback.setBounds(180,125,94,94);
-    feedback.setRange(0, 1,.01);
-    feedback.addListener(this);
-    feedback.setValue(getAudioProcessor()->getParameter(A_chorus_linesAudioProcessor::feedbackParam),dontSendNotification);
     
-    addAndMakeVisible(mod);
-    mod.setSliderStyle(Slider::RotaryVerticalDrag);
-    mod.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    mod.setBounds(314,125,94,94);
-    mod.setRange(0, 1,.01);
-    mod.addListener(this);
-    mod.setValue(getAudioProcessor()->getParameter(A_chorus_linesAudioProcessor::modParam),dontSendNotification);
+    addAndMakeVisible(widthSlider);
+    widthSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    widthSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    widthSlider.setBounds(180,125,94,94);
+    widthSlider.setRange(0, 1,.01);
+    widthSlider.addListener(this);
+    widthSlider.setValue(0);
+
     
-    addAndMakeVisible(mix);
-    mix.setSliderStyle(Slider::RotaryVerticalDrag);
-    mix.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    mix.setBounds(448,125,94,94);
-    mix.setRange(0, 1,.01);
-    mix.addListener(this);
-    mix.setValue(getAudioProcessor()->getParameter(A_chorus_linesAudioProcessor::mixParam),dontSendNotification);
+    addAndMakeVisible(rateSlider);
+    rateSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    rateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    rateSlider.setBounds(314,125,94,94);
+    rateSlider.setRange(0, 500,.1);
+    rateSlider.addListener(this);
+    rateSlider.setValue(1);
+
 }
 
 A_chorus_linesAudioProcessorEditor::~A_chorus_linesAudioProcessorEditor()
@@ -67,21 +62,17 @@ void A_chorus_linesAudioProcessorEditor::paint (Graphics& g)
 }
 void A_chorus_linesAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-    if (slider == &delay)
+    if (slider == &mixSlider)
     {
-        processor.setParameter(A_chorus_linesAudioProcessor::delayParam, slider -> getValue());
+        processor.set_Parameter(A_chorus_linesAudioProcessor::mixParam, slider -> getValue());
     }
-    if (slider == &feedback)
+    if (slider == &widthSlider)
     {
-        processor.setParameter(A_chorus_linesAudioProcessor::feedbackParam, slider -> getValue());
+        processor.set_Parameter(A_chorus_linesAudioProcessor::widthParam, slider -> getValue());
     }
-    if (slider == &mod)
+    if (slider == &rateSlider)
     {
-        processor.setParameter(A_chorus_linesAudioProcessor::modParam, slider -> getValue());
-    }
-    if (slider == &mix)
-    {
-        processor.setParameter(A_chorus_linesAudioProcessor::mixParam, slider -> getValue());
+        processor.set_Parameter(A_chorus_linesAudioProcessor::rateParam, slider -> getValue());
     }
 }
 
