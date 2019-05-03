@@ -25,7 +25,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     mixSlider.setBounds(46,125,94,94);
     mixSlider.setRange(0, 1,.01);
     mixSlider.addListener(this);
-    mixSlider.setValue(0);
+    mixSlider.setValue(.5);
     
     
     addAndMakeVisible(widthSlider);
@@ -34,14 +34,14 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     widthSlider.setBounds(180,125,94,94);
     widthSlider.setRange(0, 1,.01);
     widthSlider.addListener(this);
-    widthSlider.setValue(0);
+    widthSlider.setValue(.25);
 
     
     addAndMakeVisible(rateSlider);
     rateSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     rateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     rateSlider.setBounds(314,125,94,94);
-    rateSlider.setRange(0, 500,.1);
+    rateSlider.setRange(.01, 5,.01);
     rateSlider.addListener(this);
     rateSlider.setValue(1);
 

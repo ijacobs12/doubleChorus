@@ -39,7 +39,7 @@ void Oscillator::generate(double *buffer, int nFrames)
 {
     for (int i =0; i < nFrames; i++)
     {
-        buffer[i] = sin(mPhase);
+        buffer[i] = sin(mPhase+mPhaseOffset);
         mPhase += mPhaseIncrement;
         while (mPhase >= twoPI)
         {

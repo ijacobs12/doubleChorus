@@ -10,7 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
+#define PI 3.14159265395
 //==============================================================================
 A_chorus_linesAudioProcessor::A_chorus_linesAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -97,17 +97,30 @@ void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samples
 {
     osc1.setFrequency(1);
     osc1.setSampleRate(sampleRate);
-    osc1.setPhaseOffset(0.0);
+    osc1.setPhaseOffset(0);
     
-    leftBuffer1.setBufferSize(4410);
-    rightBuffer1.setBufferSize(4410);
+    osc2.setFrequency(1);
+    osc2.setSampleRate(sampleRate);
+    osc2.setPhaseOffset(PI/2);
+    
+    osc3.setFrequency(1);
+    osc3.setSampleRate(sampleRate);
+    osc3.setPhaseOffset(PI);
+    
+    osc4.setFrequency(1);
+    osc4.setSampleRate(sampleRate);
+    osc4.setPhaseOffset(3*PI/2);
+    
+    leftBuffer.setBufferSize(4410);
+    rightBuffer.setBufferSize(4410);
+    
     
     leftDelayTime = get_Parameter(((widthParam*.004)+.005)*sampleRate);
     rightDelayTime = get_Parameter(((widthParam*.003)+.005)*sampleRate);
     
-    set_Parameter(mixParam, 0);
-    set_Parameter(widthParam, 0);
-    set_Parameter(rateParam, 1);
+    set_Parameter(mixParam, .5);
+    set_Parameter(widthParam, .25);
+    set_Parameter(rateParam, .1);
     
 }
 
@@ -166,23 +179,24 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     {
     for (int i = 0; i < buffer.getNumSamples(); i++)
         {
-        
-            float leftMod = (osc1.nextSample()+1)*100; //*modparam?
-            float rightMod = (osc1.nextSample()+1)*100;
+            osc1.setFrequency(get_Parameter(rateParam));
+            float nextSample = osc1.nextSample()+1;
+            float leftMod = nextSample*100*get_Parameter(widthParam);
+            float rightMod = nextSample*100*get_Parameter(widthParam);
             
-            leftDelayTime = 200 + leftMod + .002; //200 * delayparam?
-            rightDelayTime = 200 + rightMod + .0015;
+            leftDelayTime = 200 + leftMod; //200 * delayparam?
+            rightDelayTime = 200 + rightMod;
             
             float l_xn = buffer.getReadPointer(0)[i];
             float r_xn = buffer.getReadPointer(1)[i];
             
-            float l_yn = leftBuffer1.getSample(leftDelayTime);
-            float r_yn = rightBuffer1.getSample(rightDelayTime);
+            float l_yn = leftBuffer.getSample(leftDelayTime);
+            float r_yn = rightBuffer.getSample(rightDelayTime);
             
             float l_combined = l_xn + r_yn*.5;
             float r_combined = r_xn + l_yn*.5; //* feedbackParam?
-            leftBuffer1.addSample(l_combined);
-            rightBuffer1.addSample(r_combined);
+            leftBuffer.addSample(l_combined);
+            rightBuffer.addSample(r_combined);
             buffer.getWritePointer(0)[i] =
                 l_xn*(1-get_Parameter(mixParam)) + l_yn*get_Parameter(mixParam);
             buffer.getWritePointer(1)[i] =

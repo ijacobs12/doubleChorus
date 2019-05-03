@@ -66,8 +66,8 @@ public:
         totalNumParams
     };
 private:
-    Oscillator osc1;
-    FractionalDelayBuffer leftBuffer1, rightBuffer1;
+    Oscillator osc1, osc2, osc3, osc4;
+    FractionalDelayBuffer leftBuffer, rightBuffer;
     float parameters[3];
     float leftDelayTime, rightDelayTime;
     //==============================================================================
