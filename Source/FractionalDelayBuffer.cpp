@@ -60,9 +60,9 @@ float FractionalDelayBuffer::getSample(float sampleIndex)
 
 float FractionalDelayBuffer::linearInterpolate(float* buffer, int bufferSize, int bufferPosition)
 {
-    int lower = (int) bufferPosition;
-    int upper = lower + 1;
-    if (upper == bufferSize) upper = 0;
+    int lower = bufferPosition;
+    int upper = (lower + 1) % bufferSize;
+    //if (upper == bufferSize) upper = 0;
     float difference = bufferPosition-lower;
     return (buffer[upper]*difference) + (buffer[lower]*(float(1)-difference));
 }

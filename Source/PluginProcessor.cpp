@@ -95,13 +95,17 @@ void A_chorus_linesAudioProcessor::changeProgramName (int index, const String& n
 //==============================================================================
 void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    leftBuffer.setBufferSize((int)4410);
-    rightBuffer.setBufferSize((int)4410);
-    leftOsc.setFrequency(0.5);
-    leftOsc.setSampleRate(sampleRate);
-    rightOsc.setFrequency(0.5);
-    rightOsc.setSampleRate(sampleRate);
-    set_Parameter(mixParam, 0); 
+    osc1.setFrequency(1);
+    osc1.setSampleRate(sampleRate);
+    osc1.setPhaseOffset(0.0);
+    
+    leftBuffer1.setBufferSize(4410);
+    rightBuffer1.setBufferSize(4410);
+    
+    leftDelayTime = get_Parameter(((widthParam*.004)+.005)*sampleRate);
+    rightDelayTime = get_Parameter(((widthParam*.003)+.005)*sampleRate);
+    
+    set_Parameter(mixParam, 0);
     set_Parameter(widthParam, 0);
     set_Parameter(rateParam, 1);
     
@@ -158,43 +162,38 @@ bool A_chorus_linesAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 
 void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    if (getTotalNumInputChannels() == 1)
-    {   //a hack because I dont want to deal with mono
-        printf("mono!\n");
-        //buffer.copyFrom(1, 0, buffer, 0, 0, buffer.getNumSamples());
-    }
-    else {
-    for (int i = 0; i < buffer.getNumSamples(); i++)
+    if (buffer.getNumChannels() == 2)
     {
-        for (int channel = 0; channel < buffer.getNumChannels(); channel ++)
+    for (int i = 0; i < buffer.getNumSamples(); i++)
         {
-            //chorus magic here
+        
+            float leftMod = (osc1.nextSample()+1)*100; //*modparam?
+            float rightMod = (osc1.nextSample()+1)*100;
             
-            
-            /*float leftMod = (leftOsc.nextSample()+1)*get_Parameter(modParam)*100;
-            float rightMod = (rightOsc.nextSample()+1)*get_Parameter(modParam)*100;
-            
-            leftDelayTime = get_Parameter(delayParam)*200 + leftMod + .002;
-            rightDelayTime = get_Parameter(delayParam)*200 + rightMod + .0015;
+            leftDelayTime = 200 + leftMod + .002; //200 * delayparam?
+            rightDelayTime = 200 + rightMod + .0015;
             
             float l_xn = buffer.getReadPointer(0)[i];
             float r_xn = buffer.getReadPointer(1)[i];
             
-            float l_yn = leftBuffer.getSample(leftDelayTime);
-            float r_yn = rightBuffer.getSample(rightDelayTime);
+            float l_yn = leftBuffer1.getSample(leftDelayTime);
+            float r_yn = rightBuffer1.getSample(rightDelayTime);
             
-            float l_combined = l_xn + r_yn*get_Parameter(feedbackParam);
-            float r_combined = r_xn + l_yn*get_Parameter(feedbackParam);
-            leftBuffer.addSample(l_combined);
-            rightBuffer.addSample(r_combined);
-            buffer.getWritePointer(0)[i] = l_xn*(1-get_Parameter(mixParam)) + l_yn*get_Parameter(mixParam);
-            buffer.getWritePointer(1)[i] = r_xn*(1-get_Parameter(mixParam)) + r_yn*get_Parameter(mixParam);*/
-            
-            
+            float l_combined = l_xn + r_yn*.5;
+            float r_combined = r_xn + l_yn*.5; //* feedbackParam?
+            leftBuffer1.addSample(l_combined);
+            rightBuffer1.addSample(r_combined);
+            buffer.getWritePointer(0)[i] =
+                l_xn*(1-get_Parameter(mixParam)) + l_yn*get_Parameter(mixParam);
+            buffer.getWritePointer(1)[i] =
+                r_xn*(1-get_Parameter(mixParam)) + r_yn*get_Parameter(mixParam);
+        
+        
         }
-        
-        
     }
+    else
+    {
+        buffer.getWritePointer(0); //audio passes through in mono
     }
 }
 

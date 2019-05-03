@@ -25,8 +25,10 @@ private:
     int mOvertoneLimit;
     double mPhaseIncrement;
     void updateIncrement();
+    double mPhaseOffset;
 public:
     void setFrequency(double frequency);
+    void setPhaseOffset(double offset);
     void setSampleRate(double sampleRate);
     void generate(double* buffer, int nFrames);
     inline void setMuted(bool muted) { isMuted = muted; }

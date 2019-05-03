@@ -25,6 +25,11 @@ void Oscillator::setSampleRate(double sampleRate)
 
 }
 
+void Oscillator::setPhaseOffset(double offset)
+{
+    mPhaseOffset = offset;
+}
+
 void Oscillator::updateIncrement()
 {
     mPhaseIncrement = mFrequency * twoPI/mSampleRate;
