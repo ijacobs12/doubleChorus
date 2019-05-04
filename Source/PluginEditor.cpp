@@ -41,7 +41,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     rateSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     rateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     rateSlider.setBounds(314,125,94,94);
-    rateSlider.setRange(.01, 5,.01);
+    rateSlider.setRange(.1, 4,.01);
     rateSlider.addListener(this);
     rateSlider.setValue(1);
 

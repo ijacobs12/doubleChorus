@@ -69,7 +69,6 @@ private:
     Oscillator osc1, osc2, osc3, osc4;
     FractionalDelayBuffer leftBuffer, rightBuffer;
     float parameters[3];
-    float leftDelayTime, rightDelayTime;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A_chorus_linesAudioProcessor)
 };
