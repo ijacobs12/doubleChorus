@@ -3,6 +3,10 @@
 <JUCERPROJECT id="Vvhcow" name="a_Chorus_lines" projectType="audioplug" jucerVersion="5.4.3">
   <MAINGROUP id="rYmEtU" name="a_Chorus_lines">
     <GROUP id="{47820778-8359-9258-3364-7FD15AFF9E4B}" name="Source">
+      <FILE id="CzxU42" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+            file="../../Desktop/doubleChorus/CustomLookAndFeel.cpp"/>
+      <FILE id="AzJVLq" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="../../Desktop/doubleChorus/CustomLookAndFeel.h"/>
       <FILE id="VuaSqY" name="FractionalDelayBuffer.cpp" compile="1" resource="0"
             file="Source/FractionalDelayBuffer.cpp"/>
       <FILE id="YAh6wz" name="FractionalDelayBuffer.h" compile="0" resource="0"
@@ -17,6 +21,8 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="ppY5JR" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="juu56i" name="knob.png" compile="0" resource="1" file="../../Desktop/doubleChorus/knob.png"/>
+    <FILE id="wew9Pi" name="background.png" compile="0" resource="1" file="../../Desktop/doubleChorus/background.png"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">

@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "CustomLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -25,8 +26,9 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
-    void sliderValueChanged(Slider* slider);
-
+    void sliderValueChanged(Slider* slider) override;
+    
+    CustomLookAndFeel lookAndFeel;
 
 private:
         Slider mixSlider, widthSlider, rateSlider;

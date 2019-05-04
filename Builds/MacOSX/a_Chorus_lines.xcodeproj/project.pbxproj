@@ -77,6 +77,10 @@
 			isa = PBXBuildFile;
 			fileRef = F52DDF6D7FA9AD5849BE9EFE;
 		};
+		28182E40D52550CA654EEEE0 = {
+			isa = PBXBuildFile;
+			fileRef = 7E39D0A3E2DF0F8AB7E648EB;
+		};
 		7CFFCF50563FA963F1EE8FA6 = {
 			isa = PBXBuildFile;
 			fileRef = 2BB0DFB01F2DE04895DAD5E6;
@@ -92,6 +96,10 @@
 		92C685EB989F31547D8BF61E = {
 			isa = PBXBuildFile;
 			fileRef = 4BCF62C6BA03F9098147AC08;
+		};
+		8238C085AC7B774429DEC854 = {
+			isa = PBXBuildFile;
+			fileRef = E2B7F17CD0D36E28EA991409;
 		};
 		14D993DF7A9C3B3A07017138 = {
 			isa = PBXBuildFile;
@@ -172,6 +180,13 @@
 		6AE9E21E9E4DE40AA98C4A96 = {
 			isa = PBXBuildFile;
 			fileRef = 805635604FF56CAAC35C6D13;
+		};
+		0ABEF6F02F1D087C4B4DB2BF = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = knob.png;
+			path = ../../../../Desktop/doubleChorus/knob.png;
+			sourceTree = "SOURCE_ROOT";
 		};
 		0D0EAA0637671F7908A6E44A = {
 			isa = PBXFileReference;
@@ -271,6 +286,13 @@
 			path = System/Library/Frameworks/WebKit.framework;
 			sourceTree = SDKROOT;
 		};
+		440A3BB4CCABF259423C4E21 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = CustomLookAndFeel.h;
+			path = ../../../../Desktop/doubleChorus/CustomLookAndFeel.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4BCF62C6BA03F9098147AC08 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -362,6 +384,20 @@
 			path = System/Library/Frameworks/Cocoa.framework;
 			sourceTree = SDKROOT;
 		};
+		7E39D0A3E2DF0F8AB7E648EB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = CustomLookAndFeel.cpp;
+			path = ../../../../Desktop/doubleChorus/CustomLookAndFeel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7FFC17F6C8C07BF6AFEDFEE4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BinaryData.h;
+			path = ../../JuceLibraryCode/BinaryData.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		805635604FF56CAAC35C6D13 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -382,6 +418,13 @@
 			name = "juce_gui_basics";
 			path = "/Applications/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
+		};
+		8514D14F039D2EF21F591F10 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = background.png;
+			path = ../../../../Desktop/doubleChorus/background.png;
+			sourceTree = "SOURCE_ROOT";
 		};
 		8D47761EAC6A0E0B9795EDA7 = {
 			isa = PBXFileReference;
@@ -404,25 +447,11 @@
 			path = System/Library/Frameworks/AudioUnit.framework;
 			sourceTree = SDKROOT;
 		};
-		9706F9DF128F5C64034EB2DC = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_basics";
-			path = "/Applications/JUCE/modules/juce_audio_basics";
-			sourceTree = "<absolute>";
-		};
 		98C030C24E5AFEFF633A4A2D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_audio_plugin_client_VST3.cpp";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST3.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
-		A401E41EE963212336852566 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = AppConfig.h;
-			path = ../../JuceLibraryCode/AppConfig.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B0020348993167AA3D37F4FB = {
@@ -460,6 +489,13 @@
 			path = "liba_Chorus_lines.a";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
+		9706F9DF128F5C64034EB2DC = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_basics";
+			path = "/Applications/JUCE/modules/juce_audio_basics";
+			sourceTree = "<absolute>";
+		};
 		9A15CE06AD68B6F77CA7893D = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -472,6 +508,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = FractionalDelayBuffer.h;
 			path = ../../Source/FractionalDelayBuffer.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A401E41EE963212336852566 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = AppConfig.h;
+			path = ../../JuceLibraryCode/AppConfig.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A4E1596864D3955C5B98564C = {
@@ -600,6 +643,13 @@
 			path = "Info-AU.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
+		E2B7F17CD0D36E28EA991409 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BinaryData.cpp;
+			path = ../../JuceLibraryCode/BinaryData.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E5B45929D846F434F236A14F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -638,6 +688,8 @@
 		1B2BCB55FBFC853297F80631 = {
 			isa = PBXGroup;
 			children = (
+				7E39D0A3E2DF0F8AB7E648EB,
+				440A3BB4CCABF259423C4E21,
 				2BB0DFB01F2DE04895DAD5E6,
 				9C016F067B45FD1B4911A975,
 				BA6385C6D41337ABF90FA7ED,
@@ -654,6 +706,8 @@
 			isa = PBXGroup;
 			children = (
 				1B2BCB55FBFC853297F80631,
+				0ABEF6F02F1D087C4B4DB2BF,
+				8514D14F039D2EF21F591F10,
 			);
 			name = "a_Chorus_lines";
 			sourceTree = "<group>";
@@ -683,6 +737,8 @@
 			isa = PBXGroup;
 			children = (
 				A401E41EE963212336852566,
+				E2B7F17CD0D36E28EA991409,
+				7FFC17F6C8C07BF6AFEDFEE4,
 				43427131F163793FC04881AE,
 				E770EADEA580210C06C39E72,
 				11A46C414F179FAD45260858,
@@ -1507,10 +1563,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28182E40D52550CA654EEEE0,
 				7CFFCF50563FA963F1EE8FA6,
 				651EF8932C10848E62823F1B,
 				6176EEF340993C5F65C90B39,
 				92C685EB989F31547D8BF61E,
+				8238C085AC7B774429DEC854,
 				14D993DF7A9C3B3A07017138,
 				0807E8DB0CA8CFC2F76EBE1E,
 				FE8A74F847CA360AB6D190D5,
