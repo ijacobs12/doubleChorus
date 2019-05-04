@@ -117,6 +117,7 @@ void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samples
     set_Parameter(mixParam, .5);
     set_Parameter(widthParam, .25);
     set_Parameter(rateParam, .1);
+    set_Parameter(feedbackParam, .5);
     
 }
 
@@ -126,6 +127,7 @@ float A_chorus_linesAudioProcessor::get_Parameter(int index)
         case mixParam: return parameters[0];
         case widthParam: return parameters[1];
         case rateParam: return parameters[2];
+        case feedbackParam: return parameters[3];
         default: return 0.0f;
     }
 }
@@ -136,6 +138,7 @@ void A_chorus_linesAudioProcessor::set_Parameter(int index, float newValue)
         case mixParam: parameters[0] = newValue; break;
         case widthParam: parameters[1] = newValue; break;
         case rateParam:  parameters[2] = newValue; break;
+        case feedbackParam: parameters[3] = newValue; break;
         default: break;
     }
 }
@@ -186,10 +189,10 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             float nextSample3 = osc3.nextSample()+1;
             float nextSample4 = osc4.nextSample()+1;
                 
-            float mod1 = 200 + nextSample1*175*get_Parameter(widthParam);
-            float mod2 = 200 + nextSample2*175*get_Parameter(widthParam);
-            float mod3 = 200 + nextSample3*175*get_Parameter(widthParam);
-            float mod4 = 200 + nextSample4*175*get_Parameter(widthParam);
+            float mod1 = 200 + nextSample1*200*get_Parameter(widthParam);
+            float mod2 = 200 + nextSample2*200*get_Parameter(widthParam);
+            float mod3 = 200 + nextSample3*200*get_Parameter(widthParam);
+            float mod4 = 200 + nextSample4*200*get_Parameter(widthParam);
             
             float l_xn = buffer.getReadPointer(0)[i]; // raw audio
             float r_xn = buffer.getReadPointer(1)[i];
@@ -205,8 +208,8 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             float r_yn4 = rightBuffer.getSample(mod4);
             
             
-            float l_combined = l_xn + (r_yn1+r_yn2+r_yn3+r_yn4)*.5/4.;
-            float r_combined = r_xn + (l_yn1+l_yn2+l_yn3+l_yn4)*.5/4.; //* .5 = feedbackParam?
+            float l_combined = l_xn + (r_yn1+r_yn2+r_yn3+r_yn4)*get_Parameter(feedbackParam)/4.;
+            float r_combined = r_xn + (l_yn1+l_yn2+l_yn3+l_yn4)*get_Parameter(feedbackParam)/4.;
             
             rightBuffer.addSample(l_combined); // update delay lines
             leftBuffer.addSample(r_combined);
@@ -245,7 +248,7 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         float l_yn3 = leftBuffer.getSample(mod3);
         float l_yn4 = leftBuffer.getSample(mod4);
         
-        float l_combined = l_xn + (l_yn1+l_yn2+l_yn3+l_yn4)*.5/4.; //.5 = feedback param
+        float l_combined = l_xn + (l_yn1+l_yn2+l_yn3+l_yn4)*feedbackParam/4.;
         
         leftBuffer.addSample(l_combined); // update delay lines
         

@@ -31,7 +31,7 @@ public:
     CustomLookAndFeel lookAndFeel;
 
 private:
-        Slider mixSlider, widthSlider, rateSlider;
+        Slider mixSlider, widthSlider, rateSlider, feedbackSlider;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     A_chorus_linesAudioProcessor& processor;

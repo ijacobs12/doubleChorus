@@ -44,9 +44,18 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     rateSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     rateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     rateSlider.setBounds(213,55,94,94);
-    rateSlider.setRange(.1, 5,.01);
+    rateSlider.setRange(.1, 6,.01);
     rateSlider.addListener(this);
     rateSlider.setValue(1);
+    
+    addAndMakeVisible(feedbackSlider);
+    feedbackSlider.setLookAndFeel(&lookAndFeel);
+    feedbackSlider.setSliderStyle(Slider::RotaryVerticalDrag);
+    feedbackSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    feedbackSlider.setBounds(123,332,94,94);
+    feedbackSlider.setRange(0, .85,.01);
+    feedbackSlider.addListener(this);
+    feedbackSlider.setValue(.5);
 
 }
 
@@ -74,6 +83,10 @@ void A_chorus_linesAudioProcessorEditor::sliderValueChanged(Slider* slider)
     if (slider == &rateSlider)
     {
         processor.set_Parameter(A_chorus_linesAudioProcessor::rateParam, slider -> getValue());
+    }
+    if (slider == &feedbackSlider)
+    {
+        processor.set_Parameter(A_chorus_linesAudioProcessor::feedbackParam, slider -> getValue());
     }
 }
 
