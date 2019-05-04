@@ -171,25 +171,25 @@ bool A_chorus_linesAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 
 void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    osc1.setFrequency(get_Parameter(rateParam)); // set oscillator frequencies (maybe do this somewhere else for efficiency?)
-    osc2.setFrequency(get_Parameter(rateParam));
-    osc3.setFrequency(get_Parameter(rateParam));
-    osc4.setFrequency(get_Parameter(rateParam));
-    
-    float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
-    float nextSample2 = osc2.nextSample()+1;
-    float nextSample3 = osc3.nextSample()+1;
-    float nextSample4 = osc4.nextSample()+1;
-    
-    float mod1 = 200 + nextSample1*175*get_Parameter(widthParam);
-    float mod2 = 200 + nextSample2*175*get_Parameter(widthParam);
-    float mod3 = 200 + nextSample3*175*get_Parameter(widthParam);
-    float mod4 = 200 + nextSample4*175*get_Parameter(widthParam);
     
     if (buffer.getNumChannels() == 2)
     {
         for (int i = 0; i < buffer.getNumSamples(); i++) //we have two channels, iterate through them
             {
+            osc1.setFrequency(get_Parameter(rateParam)); // set oscillator frequencies (maybe do this somewhere else for efficiency?)
+            osc2.setFrequency(get_Parameter(rateParam));
+            osc3.setFrequency(get_Parameter(rateParam));
+            osc4.setFrequency(get_Parameter(rateParam));
+                
+            float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
+            float nextSample2 = osc2.nextSample()+1;
+            float nextSample3 = osc3.nextSample()+1;
+            float nextSample4 = osc4.nextSample()+1;
+                
+            float mod1 = 200 + nextSample1*175*get_Parameter(widthParam);
+            float mod2 = 200 + nextSample2*175*get_Parameter(widthParam);
+            float mod3 = 200 + nextSample3*175*get_Parameter(widthParam);
+            float mod4 = 200 + nextSample4*175*get_Parameter(widthParam);
             
             float l_xn = buffer.getReadPointer(0)[i]; // raw audio
             float r_xn = buffer.getReadPointer(1)[i];
@@ -224,6 +224,20 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     {
         for (int i = 0; i < buffer.getNumSamples(); i++) //we have two channels, iterate through them
         {
+        osc1.setFrequency(get_Parameter(rateParam)); // set oscillator frequencies (maybe do this somewhere else for efficiency?)
+        osc2.setFrequency(get_Parameter(rateParam));
+        osc3.setFrequency(get_Parameter(rateParam));
+        osc4.setFrequency(get_Parameter(rateParam));
+            
+        float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
+        float nextSample2 = osc2.nextSample()+1;
+        float nextSample3 = osc3.nextSample()+1;
+        float nextSample4 = osc4.nextSample()+1;
+            
+        float mod1 = 200 + nextSample1*175*get_Parameter(widthParam);
+        float mod2 = 200 + nextSample2*175*get_Parameter(widthParam);
+        float mod3 = 200 + nextSample3*175*get_Parameter(widthParam);
+        float mod4 = 200 + nextSample4*175*get_Parameter(widthParam);
         float l_xn = buffer.getReadPointer(0)[i]; // raw audio
         
         float l_yn1 = leftBuffer.getSample(mod1); // delay line audio
