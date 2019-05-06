@@ -34,7 +34,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     widthSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     widthSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     widthSlider.setBounds(120,120,94,94);
-    widthSlider.setRange(0, 1,.01);
+    widthSlider.setRange(0.1, 1,.01);
     widthSlider.addListener(this);
     widthSlider.setValue(.25);
 
@@ -44,7 +44,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     rateSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     rateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     rateSlider.setBounds(213,55,94,94);
-    rateSlider.setRange(.1, 6,.01);
+    rateSlider.setRange(.1, 3,.01);
     rateSlider.addListener(this);
     rateSlider.setValue(1);
     
@@ -53,7 +53,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     feedbackSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     feedbackSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     feedbackSlider.setBounds(123,332,94,94);
-    feedbackSlider.setRange(0, .85,.01);
+    feedbackSlider.setRange(.2, 1,.01);
     feedbackSlider.addListener(this);
     feedbackSlider.setValue(.5);
 

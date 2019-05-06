@@ -52,7 +52,7 @@ float Oscillator::nextSample()
 {
     float value = 0.0;
     if(isMuted) return value;
-    value = sin(mPhase);
+    value = sin(mPhase+mPhaseOffset);
     mPhase += mPhaseIncrement;
     while (mPhase >= twoPI)
     {

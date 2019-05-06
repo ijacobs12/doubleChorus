@@ -137,7 +137,13 @@ void A_chorus_linesAudioProcessor::set_Parameter(int index, float newValue)
     switch (index) {
         case mixParam: parameters[0] = newValue; break;
         case widthParam: parameters[1] = newValue; break;
-        case rateParam:  parameters[2] = newValue; break;
+        case rateParam:
+            parameters[2] = newValue;
+            osc1.setFrequency(newValue);
+            osc2.setFrequency(newValue);
+            osc3.setFrequency(newValue);
+            osc4.setFrequency(newValue);
+            break;
         case feedbackParam: parameters[3] = newValue; break;
         default: break;
     }
@@ -179,20 +185,16 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     {
         for (int i = 0; i < buffer.getNumSamples(); i++) //we have two channels, iterate through them
             {
-            osc1.setFrequency(get_Parameter(rateParam)); // set oscillator frequencies (maybe do this somewhere else for efficiency?)
-            osc2.setFrequency(get_Parameter(rateParam));
-            osc3.setFrequency(get_Parameter(rateParam));
-            osc4.setFrequency(get_Parameter(rateParam));
                 
             float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
             float nextSample2 = osc2.nextSample()+1;
             float nextSample3 = osc3.nextSample()+1;
             float nextSample4 = osc4.nextSample()+1;
                 
-            float mod1 = 200 + nextSample1*200*get_Parameter(widthParam);
-            float mod2 = 200 + nextSample2*200*get_Parameter(widthParam);
-            float mod3 = 200 + nextSample3*200*get_Parameter(widthParam);
-            float mod4 = 200 + nextSample4*200*get_Parameter(widthParam);
+            float mod1 = 440 + nextSample1*100*get_Parameter(widthParam);
+            float mod2 = 440 + nextSample2*100*get_Parameter(widthParam);
+            float mod3 = 440 + nextSample3*100*get_Parameter(widthParam);
+            float mod4 = 440 + nextSample4*100*get_Parameter(widthParam);
             
             float l_xn = buffer.getReadPointer(0)[i]; // raw audio
             float r_xn = buffer.getReadPointer(1)[i];
@@ -207,19 +209,18 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             float r_yn3 = rightBuffer.getSample(mod3);
             float r_yn4 = rightBuffer.getSample(mod4);
             
+            // update delay lines. including all delay lines creates some interference that destroys the classic phasing effect, which is why I only use yn1 and 2.
+            float l_combined = l_xn + (l_yn1+l_yn2)*get_Parameter(feedbackParam)/2.;
+            float r_combined = r_xn + (r_yn1+r_yn2)*get_Parameter(feedbackParam)/2.;
             
-            float l_combined = l_xn + (r_yn1+r_yn2+r_yn3+r_yn4)*get_Parameter(feedbackParam)/4.;
-            float r_combined = r_xn + (l_yn1+l_yn2+l_yn3+l_yn4)*get_Parameter(feedbackParam)/4.;
-            
-            rightBuffer.addSample(l_combined); // update delay lines
+            rightBuffer.addSample(l_combined);
             leftBuffer.addSample(r_combined);
             
-            // write to output buffer
+            // write to output buffer. divide by 2.3 is a hacky normalization that I found by experimentation (trying to get avg. volume of 100% dry to equal avg. vol of 100% wet). makes me sort of uncomfortable because seems like it should be four, but that makes things decidedly too quiet on the wet end. hmm.
             buffer.getWritePointer(0)[i] =
-                l_xn*(1-get_Parameter(mixParam)) + (r_yn1+r_yn2+r_yn3+r_yn4)*get_Parameter(mixParam)/4.;
+                l_xn*(1-get_Parameter(mixParam)) + (r_yn1+r_yn2+r_yn3+r_yn4)*get_Parameter(mixParam)/2.3;
             buffer.getWritePointer(1)[i] =
-                r_xn*(1-get_Parameter(mixParam)) + (l_yn1+l_yn2+l_yn3+l_yn4)*get_Parameter(mixParam)/4.;
-        
+                r_xn*(1-get_Parameter(mixParam)) + (l_yn1+l_yn2+l_yn3+l_yn4)*get_Parameter(mixParam)/2.3;
         
                 }
             }
@@ -227,20 +228,16 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     {
         for (int i = 0; i < buffer.getNumSamples(); i++) //we have two channels, iterate through them
         {
-        osc1.setFrequency(get_Parameter(rateParam)); // set oscillator frequencies (maybe do this somewhere else for efficiency?)
-        osc2.setFrequency(get_Parameter(rateParam));
-        osc3.setFrequency(get_Parameter(rateParam));
-        osc4.setFrequency(get_Parameter(rateParam));
             
         float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
         float nextSample2 = osc2.nextSample()+1;
         float nextSample3 = osc3.nextSample()+1;
         float nextSample4 = osc4.nextSample()+1;
             
-        float mod1 = 200 + nextSample1*175*get_Parameter(widthParam);
-        float mod2 = 200 + nextSample2*175*get_Parameter(widthParam);
-        float mod3 = 200 + nextSample3*175*get_Parameter(widthParam);
-        float mod4 = 200 + nextSample4*175*get_Parameter(widthParam);
+        float mod1 = 440 + nextSample1*100*get_Parameter(widthParam);
+        float mod2 = 440 + nextSample2*100*get_Parameter(widthParam);
+        float mod3 = 440 + nextSample3*100*get_Parameter(widthParam);
+        float mod4 = 440 + nextSample4*100*get_Parameter(widthParam);
         float l_xn = buffer.getReadPointer(0)[i]; // raw audio
         
         float l_yn1 = leftBuffer.getSample(mod1); // delay line audio
@@ -248,13 +245,14 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         float l_yn3 = leftBuffer.getSample(mod3);
         float l_yn4 = leftBuffer.getSample(mod4);
         
-        float l_combined = l_xn + (l_yn1+l_yn2+l_yn3+l_yn4)*feedbackParam/4.;
+        float l_combined = l_xn + (l_yn1+l_yn2)*feedbackParam/2.;
         
-        leftBuffer.addSample(l_combined); // update delay lines
+        leftBuffer.addSample(l_combined); // update delay line
         
         // write to output buffer
         buffer.getWritePointer(0)[i] =
-        l_xn*(1-get_Parameter(mixParam)) + (l_yn1+l_yn2+l_yn3+l_yn4)*get_Parameter(mixParam)/4.;
+        l_xn*(1-get_Parameter(mixParam)) + (l_yn1+l_yn2+l_yn3+l_yn4)*get_Parameter(mixParam)/2.25;
+            
         }
     }
 }
