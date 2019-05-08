@@ -125,6 +125,8 @@ void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samples
     leftBuffer.setBufferSize(4410);
     rightBuffer.setBufferSize(4410);
     
+    smoothWidth.setValue(*treeState.getRawParameterValue("width"), true);
+    
     
 }
 
@@ -163,7 +165,8 @@ bool A_chorus_linesAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     float freq = *treeState.getRawParameterValue("rate");
-    float width = *treeState.getRawParameterValue("width");
+    smoothWidth.setTargetValue(*treeState.getRawParameterValue("width"));
+    float width = smoothWidth.getNextValue();
     float mix = *treeState.getRawParameterValue("mix");
     float feedback = *treeState.getRawParameterValue("feedback");
     
@@ -279,6 +282,8 @@ void A_chorus_linesAudioProcessor::setStateInformation (const void* data, int si
     if (xmlState.get() != nullptr and xmlState -> hasTagName(treeState.state.getType()))
         {
             treeState.replaceState(ValueTree::fromXml(*xmlState));
+            smoothWidth.setValue(*treeState.getRawParameterValue("width"),true);
+            //this method is apparently deprecated, but works. It forces the value to the tree value immediately, instead of interpolating.
         }
 
 }
