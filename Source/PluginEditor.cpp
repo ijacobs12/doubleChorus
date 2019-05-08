@@ -26,7 +26,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     mixSlider.setBounds(30,53,94,94);
     mixSlider.setRange(0, 1,.01);
     mixSlider.addListener(this);
-    mixSlider.setValue(.5);
+    mixSlider.setValue(*processor.mixParam);
     
     
     addAndMakeVisible(widthSlider);
@@ -36,7 +36,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     widthSlider.setBounds(120,120,94,94);
     widthSlider.setRange(0.1, 1,.01);
     widthSlider.addListener(this);
-    widthSlider.setValue(.25);
+    widthSlider.setValue(*processor.widthParam);
 
     
     addAndMakeVisible(rateSlider);
@@ -44,9 +44,10 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     rateSlider.setSliderStyle(Slider::RotaryVerticalDrag);
     rateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
     rateSlider.setBounds(213,55,94,94);
-    rateSlider.setRange(.1, 3,.01);
+    rateSlider.setRange(.1, 4,.01);
+    rateSlider.setSkewFactorFromMidPoint(.8);
     rateSlider.addListener(this);
-    rateSlider.setValue(1);
+    rateSlider.setValue(*processor.rateParam);
     
     addAndMakeVisible(feedbackSlider);
     feedbackSlider.setLookAndFeel(&lookAndFeel);
@@ -55,7 +56,7 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
     feedbackSlider.setBounds(123,332,94,94);
     feedbackSlider.setRange(.2, 1,.01);
     feedbackSlider.addListener(this);
-    feedbackSlider.setValue(.5);
+    feedbackSlider.setValue(*processor.feedbackParam);
 
 }
 
@@ -63,6 +64,14 @@ A_chorus_linesAudioProcessorEditor::~A_chorus_linesAudioProcessorEditor()
 {
 }
 
+void A_chorus_linesAudioProcessorEditor::refreshSliders(float feedback, float rate, float width, float mix)
+{
+    feedbackSlider.setValue(feedback);
+    rateSlider.setValue(rate);
+    widthSlider.setValue(width);
+    mixSlider.setValue(mix);
+    
+}
 //==============================================================================
 void A_chorus_linesAudioProcessorEditor::paint (Graphics& g)
 {
@@ -74,19 +83,19 @@ void A_chorus_linesAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
     if (slider == &mixSlider)
     {
-        processor.set_Parameter(A_chorus_linesAudioProcessor::mixParam, slider -> getValue());
+        *processor.mixParam = slider -> getValue();
     }
     if (slider == &widthSlider)
     {
-        processor.set_Parameter(A_chorus_linesAudioProcessor::widthParam, slider -> getValue());
+        *processor.widthParam = slider -> getValue();
     }
     if (slider == &rateSlider)
     {
-        processor.set_Parameter(A_chorus_linesAudioProcessor::rateParam, slider -> getValue());
+        *processor.rateParam = slider -> getValue();
     }
     if (slider == &feedbackSlider)
     {
-        processor.set_Parameter(A_chorus_linesAudioProcessor::feedbackParam, slider -> getValue());
+        *processor.feedbackParam = slider -> getValue();
     }
 }
 
@@ -95,3 +104,4 @@ void A_chorus_linesAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 }
+

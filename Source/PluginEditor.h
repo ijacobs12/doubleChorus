@@ -20,7 +20,7 @@
 class A_chorus_linesAudioProcessorEditor  : public AudioProcessorEditor, public Slider::Listener
 {
 public:
-    A_chorus_linesAudioProcessorEditor (A_chorus_linesAudioProcessor&);
+     A_chorus_linesAudioProcessorEditor (A_chorus_linesAudioProcessor&);
     ~A_chorus_linesAudioProcessorEditor();
 
     //==============================================================================
@@ -29,12 +29,14 @@ public:
     void sliderValueChanged(Slider* slider) override;
     
     CustomLookAndFeel lookAndFeel;
+    void refreshSliders(float feedback, float rate, float width, float mix);
 
 private:
-        Slider mixSlider, widthSlider, rateSlider, feedbackSlider;
+     Slider mixSlider, widthSlider, rateSlider, feedbackSlider;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     A_chorus_linesAudioProcessor& processor;
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A_chorus_linesAudioProcessorEditor)
 };
