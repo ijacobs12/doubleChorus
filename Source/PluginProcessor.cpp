@@ -21,29 +21,20 @@ A_chorus_linesAudioProcessor::A_chorus_linesAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), treeState(*this, nullptr, "PARAMS",
+                                    {
+                                        std::make_unique<AudioParameterFloat>
+                                            ("mix","Mix", NormalisableRange<float>(0.0,1.0), 0.5f),
+                                        std::make_unique<AudioParameterFloat>("rate","Rate",NormalisableRange<float>(0.0f, 4.0f, 0, .85), 1.0f),
+                                        //0 indicates continuous range, .85 introduces a skew so lower
+                                        //frequencies take up more of the knob
+                                        std::make_unique<AudioParameterFloat>("width","Width",NormalisableRange<float>(0.0,1.0), 0.5f),
+                                        std::make_unique<AudioParameterFloat>("feedback","Feedback",  NormalisableRange<float>(0.2f,0.89f), 0.3f)
+                                    }
+                    )
 #endif
 {
-    addParameter(mixParam = new AudioParameterFloat ("mix", //parameter ID
-                                                     "Mix", //parameter name
-                                                     0.0f, //min value
-                                                     1.0f, //max value
-                                                     0.5f)); //default value
-    addParameter(rateParam = new AudioParameterFloat ("rate",
-                                                     "Rate",
-                                                     0.0f,
-                                                     4.0f,
-                                                     1.0f));
-    addParameter(widthParam = new AudioParameterFloat ("width",
-                                                     "Width",
-                                                     0.0f,
-                                                     1.0f,
-                                                     0.5f));
-    addParameter(feedbackParam = new AudioParameterFloat ("feedback",
-                                                     "Feedback",
-                                                     0.2f,
-                                                     0.89f,
-                                                     0.3f));
+    
 }
 
 A_chorus_linesAudioProcessor::~A_chorus_linesAudioProcessor()
@@ -171,7 +162,11 @@ bool A_chorus_linesAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 
 void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    float freq = *rateParam;
+    float freq = *treeState.getRawParameterValue("rate");
+    float width = *treeState.getRawParameterValue("width");
+    float mix = *treeState.getRawParameterValue("mix");
+    float feedback = *treeState.getRawParameterValue("feedback");
+    
     osc1.setFrequency(freq);
     osc2.setFrequency(freq);
     osc3.setFrequency(freq);
@@ -186,10 +181,10 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             float nextSample3 = osc3.nextSample()+1;
             float nextSample4 = osc4.nextSample()+1;
                 
-            float mod1 = 440 + nextSample1*100* *widthParam;
-            float mod2 = 440 + nextSample2*100* *widthParam;
-            float mod3 = 440 + nextSample3*100* *widthParam;
-            float mod4 = 440 + nextSample4*100* *widthParam;
+            float mod1 = 440 + nextSample1*100*width;
+            float mod2 = 440 + nextSample2*100*width;
+            float mod3 = 440 + nextSample3*100*width;
+            float mod4 = 440 + nextSample4*100*width;
             
             float l_xn = buffer.getReadPointer(0)[i]; // raw audio
             float r_xn = buffer.getReadPointer(1)[i];
@@ -205,17 +200,17 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             float r_yn4 = rightBuffer.getSample(mod4);
             
             // update delay lines. including all delay lines creates some interference that destroys the classic phasing effect, which is why I only use yn1 and 2.
-            float l_combined = (l_xn + (l_yn1)* *feedbackParam);
-            float r_combined = (r_xn + (r_yn3)* *feedbackParam);
+            float l_combined = (l_xn + (l_yn1)*feedback);
+            float r_combined = (r_xn + (r_yn3)*feedback);
             
             rightBuffer.addSample(l_combined);
             leftBuffer.addSample(r_combined);
             
             // write to output buffer. divide by 2.3 is a hacky normalization that I found by experimentation (trying to get avg. volume of 100% dry to equal avg. vol of 100% wet). makes me sort of uncomfortable because seems like it should be four, but that makes things decidedly too quiet on the wet end. hmm.
             buffer.getWritePointer(0)[i] =
-                l_xn*(1 - *mixParam) + (r_yn1+r_yn2+r_yn3+r_yn4)* *mixParam/2.3;
+                l_xn*(1 - mix) + (r_yn1+r_yn2+r_yn3+r_yn4)*mix/2.3;
             buffer.getWritePointer(1)[i] =
-                r_xn*(1 - *mixParam) + (l_yn1+l_yn2+l_yn3+l_yn4)* *mixParam/2.3;
+                r_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)*mix/2.3;
         
                 }
             }
@@ -229,10 +224,10 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         float nextSample3 = osc3.nextSample()+1;
         float nextSample4 = osc4.nextSample()+1;
             
-        float mod1 = 440 + nextSample1*100* *widthParam;
-        float mod2 = 440 + nextSample2*100* *widthParam;
-        float mod3 = 440 + nextSample3*100* *widthParam;
-        float mod4 = 440 + nextSample4*100* *widthParam;
+        float mod1 = 440 + nextSample1*100* width;
+        float mod2 = 440 + nextSample2*100* width;
+        float mod3 = 440 + nextSample3*100* width;
+        float mod4 = 440 + nextSample4*100* width;
         float l_xn = buffer.getReadPointer(0)[i]; // raw audio
         
         float l_yn1 = leftBuffer.getSample(mod1); // delay line audio
@@ -240,13 +235,13 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         float l_yn3 = leftBuffer.getSample(mod3);
         float l_yn4 = leftBuffer.getSample(mod4);
         
-        float l_combined = l_xn + (l_yn1+l_yn2)* *feedbackParam/2.;
+        float l_combined = l_xn + (l_yn1+l_yn2)* feedback/2.;
         
         leftBuffer.addSample(l_combined); // update delay line
         
         // write to output buffer
         buffer.getWritePointer(0)[i] =
-        l_xn*(1 - *mixParam) + (l_yn1+l_yn2+l_yn3+l_yn4)* *mixParam/2.25;
+        l_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)* mix/2.25;
             
         }
     }
@@ -260,7 +255,7 @@ bool A_chorus_linesAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* A_chorus_linesAudioProcessor::createEditor()
 {
-    return new A_chorus_linesAudioProcessorEditor (*this);
+    return new A_chorus_linesAudioProcessorEditor (*this, treeState);
     //return new GenericAudioProcessorEditor (this);
 }
 
@@ -270,11 +265,8 @@ void A_chorus_linesAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    std::unique_ptr<XmlElement> xml (new XmlElement ("DoubleChorus"));
-    xml -> setAttribute("mix", *mixParam);
-    xml -> setAttribute("feedback", *feedbackParam);
-    xml -> setAttribute("rate", *rateParam);
-    xml -> setAttribute("width", *widthParam);
+    auto state = treeState.copyState();
+    std::unique_ptr<XmlElement> xml (state.createXml());
     copyXmlToBinary(*xml, destData);
 }
 
@@ -284,13 +276,9 @@ void A_chorus_linesAudioProcessor::setStateInformation (const void* data, int si
     // whose contents will have been created by the getStateInformation() call.
     
     std::unique_ptr<XmlElement> xmlState (getXmlFromBinary(data, sizeInBytes));
-    if (xmlState.get() != nullptr and xmlState -> hasTagName("DoubleChorus"))
+    if (xmlState.get() != nullptr and xmlState -> hasTagName(treeState.state.getType()))
         {
-            //second number is default in case no value is found
-            *mixParam = xmlState -> getDoubleAttribute("mix", .5);
-            *feedbackParam = xmlState -> getDoubleAttribute("feedback", .3);
-            *rateParam = xmlState -> getDoubleAttribute("rate", 1);
-            *widthParam = xmlState -> getDoubleAttribute("width", .5);
+            treeState.replaceState(ValueTree::fromXml(*xmlState));
         }
 
 }

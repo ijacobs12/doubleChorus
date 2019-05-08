@@ -56,8 +56,7 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    AudioParameterFloat *mixParam, *rateParam, *feedbackParam, *widthParam;
-    
+    AudioProcessorValueTreeState treeState;
 private:
     Oscillator osc1, osc2, osc3, osc4;
     FractionalDelayBuffer leftBuffer, rightBuffer;
