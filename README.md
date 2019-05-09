@@ -1,4 +1,3 @@
-im fucked
 An emulation of the Mr. Black double chorus pedal. The algorithm used is described here: 
 https://www.mrblackpedals.com/blogs/straight-jive/7147476-secrets-of-tone-what-makes-the-doublechorus-so-epically-rad
 
