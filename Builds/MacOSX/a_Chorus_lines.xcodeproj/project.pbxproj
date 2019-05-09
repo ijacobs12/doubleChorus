@@ -262,7 +262,7 @@
 			isa = PBXFileReference;
 			explicitFileType = wrapper.cfbundle;
 			includeInIndex = 0;
-			path = "a_Chorus_lines.vst3";
+			path = "A_chorus_lines.vst3";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
 		43427131F163793FC04881AE = {
@@ -320,13 +320,6 @@
 			name = AudioToolbox.framework;
 			path = System/Library/Frameworks/AudioToolbox.framework;
 			sourceTree = SDKROOT;
-		};
-		552002E38DAC1F888789AFC1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
-			name = "a_Chorus_lines.entitlements";
-			path = "a_Chorus_lines.entitlements";
-			sourceTree = "SOURCE_ROOT";
 		};
 		650A9E660B67B619EDA46734 = {
 			isa = PBXFileReference;
@@ -447,6 +440,13 @@
 			path = System/Library/Frameworks/AudioUnit.framework;
 			sourceTree = SDKROOT;
 		};
+		9706F9DF128F5C64034EB2DC = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_basics";
+			path = "/Applications/JUCE/modules/juce_audio_basics";
+			sourceTree = "<absolute>";
+		};
 		98C030C24E5AFEFF633A4A2D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -454,12 +454,12 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST3.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
-		B0020348993167AA3D37F4FB = {
+		9D793C809851FFE8FF2115EE = {
 			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_formats";
-			path = "/Applications/JUCE/modules/juce_audio_formats";
-			sourceTree = "<absolute>";
+			lastKnownFileType = text.plist.xml;
+			name = "A_chorus_lines.entitlements";
+			path = "A_chorus_lines.entitlements";
+			sourceTree = "SOURCE_ROOT";
 		};
 		B4F08A89CFDDD50668529C1E = {
 			isa = PBXFileReference;
@@ -472,29 +472,22 @@
 			isa = PBXFileReference;
 			explicitFileType = wrapper.cfbundle;
 			includeInIndex = 0;
-			path = "a_Chorus_lines.component";
+			path = "A_chorus_lines.component";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
 		5AEF64FFA293DA1C156D9E90 = {
 			isa = PBXFileReference;
 			explicitFileType = wrapper.application;
 			includeInIndex = 0;
-			path = "a_Chorus_lines.app";
+			path = "A_chorus_lines.app";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
 		8C1BE9BCFE86EEAB460ECF47 = {
 			isa = PBXFileReference;
 			explicitFileType = archive.ar;
 			includeInIndex = 0;
-			path = "liba_Chorus_lines.a";
+			path = "libA_chorus_lines.a";
 			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
-		9706F9DF128F5C64034EB2DC = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_audio_basics";
-			path = "/Applications/JUCE/modules/juce_audio_basics";
-			sourceTree = "<absolute>";
 		};
 		9A15CE06AD68B6F77CA7893D = {
 			isa = PBXFileReference;
@@ -537,6 +530,13 @@
 			name = QuartzCore.framework;
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
+		};
+		B0020348993167AA3D37F4FB = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_audio_formats";
+			path = "/Applications/JUCE/modules/juce_audio_formats";
+			sourceTree = "<absolute>";
 		};
 		B250EE1B425BCF1D354F94C0 = {
 			isa = PBXFileReference;
@@ -709,7 +709,7 @@
 				0ABEF6F02F1D087C4B4DB2BF,
 				8514D14F039D2EF21F591F10,
 			);
-			name = "a_Chorus_lines";
+			name = "A_chorus_lines";
 			sourceTree = "<group>";
 		};
 		F11635527C4F31CC6C449606 = {
@@ -809,7 +809,7 @@
 		8007790F8FC68458E8EDEF1C = {
 			isa = PBXGroup;
 			children = (
-				552002E38DAC1F888789AFC1,
+				9D793C809851FFE8FF2115EE,
 				288581EA3EDA8470F7EED850,
 				F11635527C4F31CC6C449606,
 				9BC80C9B5244245D568D49B0,
@@ -876,9 +876,9 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-bundle -la_Chorus_lines";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				OTHER_LDFLAGS = "-bundle -lA_chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				USE_HEADERMAP = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -928,9 +928,9 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-bundle -la_Chorus_lines";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				OTHER_LDFLAGS = "-bundle -lA_chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				USE_HEADERMAP = NO;
 				WRAPPER_EXTENSION = vst3;
 			};
@@ -978,10 +978,10 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-bundle -la_Chorus_lines";
+				OTHER_LDFLAGS = "-bundle -lA_chorus_lines";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				USE_HEADERMAP = NO;
 				WRAPPER_EXTENSION = component;
 			};
@@ -1031,10 +1031,10 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-bundle -la_Chorus_lines";
+				OTHER_LDFLAGS = "-bundle -lA_chorus_lines";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				USE_HEADERMAP = NO;
 				WRAPPER_EXTENSION = component;
 			};
@@ -1077,9 +1077,9 @@
 				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-la_Chorus_lines";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				OTHER_LDFLAGS = "-lA_chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
@@ -1123,9 +1123,9 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-la_Chorus_lines";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				OTHER_LDFLAGS = "-lA_chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				USE_HEADERMAP = NO;
 			};
 			name = Release;
@@ -1167,8 +1167,8 @@
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				SKIP_INSTALL = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -1213,8 +1213,8 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.a_Chorus_lines;
-				PRODUCT_NAME = "a_Chorus_lines";
+				PRODUCT_BUNDLE_IDENTIFIER = Isaac Jacobs;
+				PRODUCT_NAME = "A_chorus_lines";
 				SKIP_INSTALL = YES;
 				USE_HEADERMAP = NO;
 			};
@@ -1260,7 +1260,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "a_Chorus_lines";
+				PRODUCT_NAME = "A_chorus_lines";
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -1304,7 +1304,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PRODUCT_NAME = "a_Chorus_lines";
+				PRODUCT_NAME = "A_chorus_lines";
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -1355,8 +1355,8 @@
 				1A5C5E60C64728D555CBF1DB,
 				2139FB2CC79E26183A37EEB3,
 			);
-			name = "a_Chorus_lines - All";
-			productName = "a_Chorus_lines";
+			name = "A_chorus_lines - All";
+			productName = "A_chorus_lines";
 		};
 		1751A29A1B1025B814D848F9 = {
 			isa = XCConfigurationList;
@@ -1413,8 +1413,8 @@
 			dependencies = (
 				2139FB2CC79E26183A37EEB3,
 			);
-			name = "a_Chorus_lines - VST3";
-			productName = "a_Chorus_lines";
+			name = "A_chorus_lines - VST3";
+			productName = "A_chorus_lines";
 			productReference = 4073F1343C858B97398E2252;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1485,8 +1485,8 @@
 			dependencies = (
 				2139FB2CC79E26183A37EEB3,
 			);
-			name = "a_Chorus_lines - AU";
-			productName = "a_Chorus_lines";
+			name = "A_chorus_lines - AU";
+			productName = "A_chorus_lines";
 			productReference = D51F0DDC5C5F1E0C94FF8307;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -1545,8 +1545,8 @@
 			dependencies = (
 				2139FB2CC79E26183A37EEB3,
 			);
-			name = "a_Chorus_lines - Standalone Plugin";
-			productName = "a_Chorus_lines";
+			name = "A_chorus_lines - Standalone Plugin";
+			productName = "A_chorus_lines";
 			productReference = 5AEF64FFA293DA1C156D9E90;
 			productType = "com.apple.product-type.application";
 		};
@@ -1595,8 +1595,8 @@
 			);
 			buildRules = ( );
 			dependencies = ( );
-			name = "a_Chorus_lines - Shared Code";
-			productName = "a_Chorus_lines";
+			name = "A_chorus_lines - Shared Code";
+			productName = "A_chorus_lines";
 			productReference = 8C1BE9BCFE86EEAB460ECF47;
 			productType = "com.apple.product-type.library.static";
 		};

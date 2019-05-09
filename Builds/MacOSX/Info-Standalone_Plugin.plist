@@ -8,11 +8,11 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.a_Chorus_lines</string>
+    <string>IsaacJacobs</string>
     <key>CFBundleName</key>
-    <string>a_Chorus_lines</string>
+    <string>DoubleDelay</string>
     <key>CFBundleDisplayName</key>
-    <string>a_Chorus_lines</string>
+    <string>DoubleDelay</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>

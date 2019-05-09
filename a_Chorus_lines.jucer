@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Vvhcow" name="a_Chorus_lines" projectType="audioplug" jucerVersion="5.4.3">
-  <MAINGROUP id="rYmEtU" name="a_Chorus_lines">
+<JUCERPROJECT id="Vvhcow" name="DoubleDelay" projectType="audioplug" jucerVersion="5.4.3"
+              bundleIdentifier="IsaacJacobs" pluginManufacturer="Isaac Jacobs"
+              pluginName="DoubleDelay" pluginDesc="DoubleDelay">
+  <MAINGROUP id="rYmEtU" name="DoubleDelay">
     <GROUP id="{47820778-8359-9258-3364-7FD15AFF9E4B}" name="Source">
       <FILE id="CzxU42" name="CustomLookAndFeel.cpp" compile="1" resource="0"
             file="../../Desktop/doubleChorus/CustomLookAndFeel.cpp"/>

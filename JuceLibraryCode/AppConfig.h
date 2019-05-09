@@ -326,13 +326,13 @@
  #define JucePlugin_Enable_IAA             0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "a_Chorus_lines"
+ #define JucePlugin_Name                   "DoubleDelay"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "a_Chorus_lines"
+ #define JucePlugin_Desc                   "DoubleDelay"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "yourcompany"
+ #define JucePlugin_Manufacturer           "Isaac Jacobs"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
  #define JucePlugin_ManufacturerWebsite    ""
@@ -386,16 +386,16 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         a_Chorus_linesAU
+ #define JucePlugin_AUExportPrefix         DoubleDelayAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "a_Chorus_linesAU"
+ #define JucePlugin_AUExportPrefixQuoted   "DoubleDelayAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.yourcompany.a_Chorus_lines
+ #define JucePlugin_CFBundleIdentifier     IsaacJacobs
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           0
@@ -413,7 +413,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.yourcompany.a_Chorus_lines
+ #define JucePlugin_AAXIdentifier          com.yourcompany.DoubleDelay
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -437,7 +437,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "yourcompany: a_Chorus_lines"
+ #define JucePlugin_IAAName                "Isaac Jacobs: DoubleDelay"
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16
