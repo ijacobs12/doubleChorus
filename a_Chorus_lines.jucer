@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Vvhcow" name="DoubleDelay" projectType="audioplug" jucerVersion="5.4.3"
-              bundleIdentifier="IsaacJacobs" pluginManufacturer="Isaac Jacobs"
-              pluginName="DoubleDelay" pluginDesc="DoubleDelay">
-  <MAINGROUP id="rYmEtU" name="DoubleDelay">
+<JUCERPROJECT id="Vvhcow" name="DoubleChorus" projectType="audioplug" jucerVersion="5.4.3"
+              bundleIdentifier="com.IsaacJacobs.DoubleChorus" pluginManufacturer="Isaac Jacobs"
+              pluginName="DoubleChorus" pluginDesc="DoubleChorus">
+  <MAINGROUP id="rYmEtU" name="DoubleChorus">
     <GROUP id="{47820778-8359-9258-3364-7FD15AFF9E4B}" name="Source">
       <FILE id="CzxU42" name="CustomLookAndFeel.cpp" compile="1" resource="0"
             file="../../Desktop/doubleChorus/CustomLookAndFeel.cpp"/>
@@ -68,7 +68,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
-    <OSX/>
+    <OSX buildEnabled="1"/>
   </LIVE_SETTINGS>
   <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
 </JUCERPROJECT>

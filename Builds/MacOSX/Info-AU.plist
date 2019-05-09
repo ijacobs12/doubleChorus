@@ -8,11 +8,11 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>IsaacJacobs</string>
+    <string>com.IsaacJacobs.DoubleChorus</string>
     <key>CFBundleName</key>
-    <string>DoubleDelay</string>
+    <string>DoubleChorus</string>
     <key>CFBundleDisplayName</key>
-    <string>DoubleDelay</string>
+    <string>DoubleChorus</string>
     <key>CFBundlePackageType</key>
     <string>BNDL</string>
     <key>CFBundleSignature</key>
@@ -29,11 +29,11 @@
     <array>
       <dict>
         <key>name</key>
-        <string>Isaac Jacobs: DoubleDelay</string>
+        <string>Isaac Jacobs: DoubleChorus</string>
         <key>description</key>
-        <string>DoubleDelay</string>
+        <string>DoubleChorus</string>
         <key>factoryFunction</key>
-        <string>DoubleDelayAUFactory</string>
+        <string>DoubleChorusAUFactory</string>
         <key>manufacturer</key>
         <string>Manu</string>
         <key>type</key>

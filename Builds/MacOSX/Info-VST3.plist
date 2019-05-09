@@ -8,11 +8,11 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>IsaacJacobs</string>
+    <string>com.IsaacJacobs.DoubleChorus</string>
     <key>CFBundleName</key>
-    <string>DoubleDelay</string>
+    <string>DoubleChorus</string>
     <key>CFBundleDisplayName</key>
-    <string>DoubleDelay</string>
+    <string>DoubleChorus</string>
     <key>CFBundlePackageType</key>
     <string>BNDL</string>
     <key>CFBundleSignature</key>

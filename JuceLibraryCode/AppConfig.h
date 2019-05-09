@@ -326,10 +326,10 @@
  #define JucePlugin_Enable_IAA             0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "DoubleDelay"
+ #define JucePlugin_Name                   "DoubleChorus"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "DoubleDelay"
+ #define JucePlugin_Desc                   "DoubleChorus"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "Isaac Jacobs"
@@ -386,16 +386,16 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         DoubleDelayAU
+ #define JucePlugin_AUExportPrefix         DoubleChorusAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "DoubleDelayAU"
+ #define JucePlugin_AUExportPrefixQuoted   "DoubleChorusAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     IsaacJacobs
+ #define JucePlugin_CFBundleIdentifier     com.IsaacJacobs.DoubleChorus
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           0
@@ -413,7 +413,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.yourcompany.DoubleDelay
+ #define JucePlugin_AAXIdentifier          com.yourcompany.DoubleChorus
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -437,7 +437,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "Isaac Jacobs: DoubleDelay"
+ #define JucePlugin_IAAName                "Isaac Jacobs: DoubleChorus"
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16
