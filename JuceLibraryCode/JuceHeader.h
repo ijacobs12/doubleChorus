@@ -29,6 +29,7 @@
 #include <juce_gui_extra/juce_gui_extra.h>
 #include <juce_opengl/juce_opengl.h>
 
+#include "BinaryData.h"
 
 #if ! DONT_SET_USING_JUCE_NAMESPACE
  // If your code uses a lot of JUCE classes, then this will obviously save you
@@ -39,8 +40,8 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "a_Chorus_lines";
-    const char* const  companyName    = "";
+    const char* const  projectName    = "DoubleChorus";
+    const char* const  companyName    = "Isaac Jacobs";
     const char* const  versionString  = "1.0.0";
     const int          versionNumber  = 0x10000;
 }

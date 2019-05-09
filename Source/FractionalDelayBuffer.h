@@ -25,7 +25,7 @@ public:
     void addSample(float sample);
     float getSample(float sampleIndex);
     int getValidIndex(int index);
-    float linearInterpolate(float* buffer, int bufferSize, int bufferPosition);
+    float linearInterpolate(float* buffer, int bufferSize, float bufferPosition);
     
 private:
     int index;

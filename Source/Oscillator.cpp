@@ -25,6 +25,11 @@ void Oscillator::setSampleRate(double sampleRate)
 
 }
 
+void Oscillator::setPhaseOffset(double offset)
+{
+    mPhaseOffset = offset;
+}
+
 void Oscillator::updateIncrement()
 {
     mPhaseIncrement = mFrequency * twoPI/mSampleRate;
@@ -34,7 +39,7 @@ void Oscillator::generate(double *buffer, int nFrames)
 {
     for (int i =0; i < nFrames; i++)
     {
-        buffer[i] = sin(mPhase);
+        buffer[i] = sin(mPhase+mPhaseOffset);
         mPhase += mPhaseIncrement;
         while (mPhase >= twoPI)
         {
@@ -47,7 +52,7 @@ float Oscillator::nextSample()
 {
     float value = 0.0;
     if(isMuted) return value;
-    value = sin(mPhase);
+    value = sin(mPhase+mPhaseOffset);
     mPhase += mPhaseIncrement;
     while (mPhase >= twoPI)
     {

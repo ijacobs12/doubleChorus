@@ -17,12 +17,12 @@
 //==============================================================================
 /**
 */
-class A_chorus_linesAudioProcessor  : public AudioProcessor
+class DoubleChorusAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    A_chorus_linesAudioProcessor();
-    ~A_chorus_linesAudioProcessor();
+    DoubleChorusAudioProcessor();
+    ~DoubleChorusAudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -56,21 +56,12 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    float getParameter(int index);
-    void setParameter(int index, float newValue);
-    enum Parameters
-    {
-        delayParam = 0,
-        feedbackParam,
-        modParam,
-        mixParam,
-        totalNumParams
-    };
+    AudioProcessorValueTreeState treeState;
+    SmoothedValue<float, ValueSmoothingTypes::Linear> smoothWidth, smoothMix;
 private:
-    Oscillator leftOsc, rightOsc;
+    Oscillator osc1, osc2, osc3, osc4;
     FractionalDelayBuffer leftBuffer, rightBuffer;
-    float leftDelayTime, rightDelayTime;
-    float parameters[4];
+    
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A_chorus_linesAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoubleChorusAudioProcessor)
 };
