@@ -18,11 +18,11 @@ typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 //==============================================================================
 /**
 */
-class A_chorus_linesAudioProcessorEditor  : public AudioProcessorEditor
+class DoubleChorusAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-     A_chorus_linesAudioProcessorEditor (A_chorus_linesAudioProcessor&, AudioProcessorValueTreeState&);
-    ~A_chorus_linesAudioProcessorEditor();
+     DoubleChorusAudioProcessorEditor (DoubleChorusAudioProcessor&, AudioProcessorValueTreeState&);
+    ~DoubleChorusAudioProcessorEditor();
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -36,5 +36,5 @@ private:
     std::unique_ptr<SliderAttachment> mixAttachment, rateAttachment, feedbackAttachment, widthAttachment;
     AudioProcessorValueTreeState& valueTreeState;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A_chorus_linesAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoubleChorusAudioProcessorEditor)
 };

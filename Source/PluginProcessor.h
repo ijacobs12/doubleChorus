@@ -17,12 +17,12 @@
 //==============================================================================
 /**
 */
-class A_chorus_linesAudioProcessor  : public AudioProcessor
+class DoubleChorusAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    A_chorus_linesAudioProcessor();
-    ~A_chorus_linesAudioProcessor();
+    DoubleChorusAudioProcessor();
+    ~DoubleChorusAudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -63,5 +63,5 @@ private:
     FractionalDelayBuffer leftBuffer, rightBuffer;
     
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (A_chorus_linesAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DoubleChorusAudioProcessor)
 };

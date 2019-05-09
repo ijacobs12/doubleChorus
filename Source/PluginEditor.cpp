@@ -12,7 +12,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus_linesAudioProcessor& p, AudioProcessorValueTreeState& vts)
+DoubleChorusAudioProcessorEditor::DoubleChorusAudioProcessorEditor (DoubleChorusAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor (&p), valueTreeState(vts)
 {
     // Make sure that before the constructor has finished, you've set the
@@ -50,11 +50,11 @@ A_chorus_linesAudioProcessorEditor::A_chorus_linesAudioProcessorEditor (A_chorus
 
 }
 
-A_chorus_linesAudioProcessorEditor::~A_chorus_linesAudioProcessorEditor()
+DoubleChorusAudioProcessorEditor::~DoubleChorusAudioProcessorEditor()
 {
 }
 
-void A_chorus_linesAudioProcessorEditor::refreshSliders(float feedback, float rate, float width, float mix)
+void DoubleChorusAudioProcessorEditor::refreshSliders(float feedback, float rate, float width, float mix)
 {
     feedbackSlider.setValue(feedback);
     rateSlider.setValue(rate);
@@ -63,7 +63,7 @@ void A_chorus_linesAudioProcessorEditor::refreshSliders(float feedback, float ra
     
 }
 //==============================================================================
-void A_chorus_linesAudioProcessorEditor::paint (Graphics& g)
+void DoubleChorusAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     Image bg = ImageCache::getFromMemory(BinaryData::background_png, BinaryData::background_pngSize);
@@ -71,7 +71,7 @@ void A_chorus_linesAudioProcessorEditor::paint (Graphics& g)
 }
 
 
-void A_chorus_linesAudioProcessorEditor::resized()
+void DoubleChorusAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..

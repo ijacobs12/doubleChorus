@@ -12,7 +12,7 @@
 #include "PluginEditor.h"
 #define PI 3.14159265395
 //==============================================================================
-A_chorus_linesAudioProcessor::A_chorus_linesAudioProcessor()
+DoubleChorusAudioProcessor::DoubleChorusAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -37,17 +37,17 @@ A_chorus_linesAudioProcessor::A_chorus_linesAudioProcessor()
     
 }
 
-A_chorus_linesAudioProcessor::~A_chorus_linesAudioProcessor()
+DoubleChorusAudioProcessor::~DoubleChorusAudioProcessor()
 {
 }
 
 //==============================================================================
-const String A_chorus_linesAudioProcessor::getName() const
+const String DoubleChorusAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool A_chorus_linesAudioProcessor::acceptsMidi() const
+bool DoubleChorusAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -56,7 +56,7 @@ bool A_chorus_linesAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool A_chorus_linesAudioProcessor::producesMidi() const
+bool DoubleChorusAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -65,7 +65,7 @@ bool A_chorus_linesAudioProcessor::producesMidi() const
    #endif
 }
 
-bool A_chorus_linesAudioProcessor::isMidiEffect() const
+bool DoubleChorusAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -74,37 +74,37 @@ bool A_chorus_linesAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double A_chorus_linesAudioProcessor::getTailLengthSeconds() const
+double DoubleChorusAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int A_chorus_linesAudioProcessor::getNumPrograms()
+int DoubleChorusAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int A_chorus_linesAudioProcessor::getCurrentProgram()
+int DoubleChorusAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void A_chorus_linesAudioProcessor::setCurrentProgram (int index)
+void DoubleChorusAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const String A_chorus_linesAudioProcessor::getProgramName (int index)
+const String DoubleChorusAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void A_chorus_linesAudioProcessor::changeProgramName (int index, const String& newName)
+void DoubleChorusAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
-void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void DoubleChorusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     osc1.setFrequency(1);
     osc1.setSampleRate(sampleRate);
@@ -135,14 +135,14 @@ void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samples
 
 
 
-void A_chorus_linesAudioProcessor::releaseResources()
+void DoubleChorusAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool A_chorus_linesAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool DoubleChorusAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
@@ -165,7 +165,7 @@ bool A_chorus_linesAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 }
 #endif
 
-void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void DoubleChorusAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     float freq = *treeState.getRawParameterValue("rate");
     smoothWidth.setTargetValue(*treeState.getRawParameterValue("width"));
@@ -258,19 +258,18 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
 }
 
 //==============================================================================
-bool A_chorus_linesAudioProcessor::hasEditor() const
+bool DoubleChorusAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* A_chorus_linesAudioProcessor::createEditor()
+AudioProcessorEditor* DoubleChorusAudioProcessor::createEditor()
 {
-    return new A_chorus_linesAudioProcessorEditor (*this, treeState);
-    //return new GenericAudioProcessorEditor (this);
+    return new DoubleChorusAudioProcessorEditor (*this, treeState);
 }
 
 //==============================================================================
-void A_chorus_linesAudioProcessor::getStateInformation (MemoryBlock& destData)
+void DoubleChorusAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
@@ -280,7 +279,7 @@ void A_chorus_linesAudioProcessor::getStateInformation (MemoryBlock& destData)
     copyXmlToBinary(*xml, destData);
 }
 
-void A_chorus_linesAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void DoubleChorusAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -300,5 +299,5 @@ void A_chorus_linesAudioProcessor::setStateInformation (const void* data, int si
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new A_chorus_linesAudioProcessor();
+    return new DoubleChorusAudioProcessor();
 }
