@@ -4,4 +4,4 @@ build/
 DerivedData/ 
 ## Various settings
 *.pbxuser
-xcuserdata/
+xcuserdata/.DS_Store
