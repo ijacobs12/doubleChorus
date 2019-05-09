@@ -25,8 +25,8 @@ A_chorus_linesAudioProcessor::A_chorus_linesAudioProcessor()
                                     {
                                         std::make_unique<AudioParameterFloat>
                                             ("mix","Mix", NormalisableRange<float>(0.0,1.0), 0.5f),
-                                        std::make_unique<AudioParameterFloat>("rate","Rate",NormalisableRange<float>(0.01f, 4.0f, 0, .85), 1.0f),
-                                        //0 indicates continuous range, .85 introduces a skew so lower
+                                        std::make_unique<AudioParameterFloat>("rate","Rate",NormalisableRange<float>(0.01f, 4.0f, 0, .8), 1.0f),
+                                        //0 indicates continuous range, .8 introduces a skew so lower
                                         //frequencies take up more of the knob
                                         std::make_unique<AudioParameterFloat>("width","Width",NormalisableRange<float>(0.2,1.3), 0.5f),
                                         std::make_unique<AudioParameterFloat>("feedback","Feedback",  NormalisableRange<float>(0.2f,0.89f), 0.3f)
@@ -212,13 +212,13 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             rightBuffer.addSample(l_combined);
             leftBuffer.addSample(r_combined);
             
-            // write to output buffer. divide by 2.2 is a hacky normalization that I found by experimentation (trying to get avg. volume of 100% dry to equal avg. vol of 100% wet). makes me sort of uncomfortable because seems like it should be four, but that makes things decidedly too quiet on the wet end. hmm.
+            // write to output buffer. divide by 2 is a hacky normalization that I found by experimentation (trying to get avg. volume of 100% dry to equal avg. vol of 100% wet). makes me sort of uncomfortable because seems like it should be four, but that makes things decidedly too quiet on the wet end. hmm.
                 
             float mix = smoothMix.getNextValue();
             buffer.getWritePointer(0)[i] =
-                l_xn*(1 - mix) + (r_yn1+r_yn2+r_yn3+r_yn4)*mix/2.2;
+                l_xn*(1 - mix) + (r_yn1+r_yn2+r_yn3+r_yn4)*mix/2.1;
             buffer.getWritePointer(1)[i] =
-                r_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)*mix/2.2;
+                r_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)*mix/2.1;
         
                 }
             }
@@ -251,7 +251,7 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         // write to output buffer
         float mix = smoothMix.getNextValue();
         buffer.getWritePointer(0)[i] =
-        l_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)* mix/2.2;
+        l_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)* mix/2.1;
             
         }
     }
