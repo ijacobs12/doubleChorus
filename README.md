@@ -5,4 +5,4 @@ If you want the plugin, download and unzip the component.zip file (mac) or vst.z
 
 The plugin itself is easy to use, and installs like any other VST or Component.
 
-(shoutout to Marc Wilhite, who doesn't know me but has a github project that helped me with getting started: https://github.com/marcwilhite/StereoChorus/blob/master/Source/CustomLookAndFeel.cpp)
+(shoutout to Marc Wilhite's Stereo Chorus project, which was a great resource when I was getting started: https://github.com/marcwilhite/StereoChorus/blob/master/Source/CustomLookAndFeel.cpp)
