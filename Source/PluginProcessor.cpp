@@ -25,10 +25,10 @@ A_chorus_linesAudioProcessor::A_chorus_linesAudioProcessor()
                                     {
                                         std::make_unique<AudioParameterFloat>
                                             ("mix","Mix", NormalisableRange<float>(0.0,1.0), 0.5f),
-                                        std::make_unique<AudioParameterFloat>("rate","Rate",NormalisableRange<float>(0.0f, 4.0f, 0, .85), 1.0f),
+                                        std::make_unique<AudioParameterFloat>("rate","Rate",NormalisableRange<float>(0.01f, 4.0f, 0, .85), 1.0f),
                                         //0 indicates continuous range, .85 introduces a skew so lower
                                         //frequencies take up more of the knob
-                                        std::make_unique<AudioParameterFloat>("width","Width",NormalisableRange<float>(0.0,1.0), 0.5f),
+                                        std::make_unique<AudioParameterFloat>("width","Width",NormalisableRange<float>(0.2,1.3), 0.5f),
                                         std::make_unique<AudioParameterFloat>("feedback","Feedback",  NormalisableRange<float>(0.2f,0.89f), 0.3f)
                                     }
                     )
@@ -125,7 +125,10 @@ void A_chorus_linesAudioProcessor::prepareToPlay (double sampleRate, int samples
     leftBuffer.setBufferSize(4410);
     rightBuffer.setBufferSize(4410);
     
-    smoothWidth.setValue(*treeState.getRawParameterValue("width"), true);
+    smoothWidth.reset(100); //100 sample ramp
+    smoothMix.reset(100);
+    smoothWidth.setCurrentAndTargetValue(*treeState.getRawParameterValue("width"));
+    
     
     
 }
@@ -166,8 +169,7 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
 {
     float freq = *treeState.getRawParameterValue("rate");
     smoothWidth.setTargetValue(*treeState.getRawParameterValue("width"));
-    float width = smoothWidth.getNextValue();
-    float mix = *treeState.getRawParameterValue("mix");
+    smoothMix.setTargetValue(*treeState.getRawParameterValue("mix"));
     float feedback = *treeState.getRawParameterValue("feedback");
     
     osc1.setFrequency(freq);
@@ -178,12 +180,13 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     {
         for (int i = 0; i < buffer.getNumSamples(); i++) //we have two channels, iterate through them
             {
-                
-            float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
-            float nextSample2 = osc2.nextSample()+1;
-            float nextSample3 = osc3.nextSample()+1;
-            float nextSample4 = osc4.nextSample()+1;
-                
+            
+            float nextSample1 = osc1.nextSample() + 1; // get oscillator values for offset
+            float nextSample2 = osc2.nextSample() + 1;
+            float nextSample3 = osc3.nextSample() + 1;
+            float nextSample4 = osc4.nextSample() + 1;
+             
+            float width = smoothWidth.getNextValue();
             float mod1 = 440 + nextSample1*100*width;
             float mod2 = 440 + nextSample2*100*width;
             float mod3 = 440 + nextSample3*100*width;
@@ -209,11 +212,13 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             rightBuffer.addSample(l_combined);
             leftBuffer.addSample(r_combined);
             
-            // write to output buffer. divide by 2.3 is a hacky normalization that I found by experimentation (trying to get avg. volume of 100% dry to equal avg. vol of 100% wet). makes me sort of uncomfortable because seems like it should be four, but that makes things decidedly too quiet on the wet end. hmm.
+            // write to output buffer. divide by 2.2 is a hacky normalization that I found by experimentation (trying to get avg. volume of 100% dry to equal avg. vol of 100% wet). makes me sort of uncomfortable because seems like it should be four, but that makes things decidedly too quiet on the wet end. hmm.
+                
+            float mix = smoothMix.getNextValue();
             buffer.getWritePointer(0)[i] =
-                l_xn*(1 - mix) + (r_yn1+r_yn2+r_yn3+r_yn4)*mix/2.3;
+                l_xn*(1 - mix) + (r_yn1+r_yn2+r_yn3+r_yn4)*mix/2.2;
             buffer.getWritePointer(1)[i] =
-                r_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)*mix/2.3;
+                r_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)*mix/2.2;
         
                 }
             }
@@ -222,15 +227,16 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         for (int i = 0; i < buffer.getNumSamples(); i++) //we have two channels, iterate through them
         {
             
-        float nextSample1 = osc1.nextSample()+1; // get oscillator values for offset
-        float nextSample2 = osc2.nextSample()+1;
-        float nextSample3 = osc3.nextSample()+1;
-        float nextSample4 = osc4.nextSample()+1;
+        float nextSample1 = osc1.nextSample() + 1; // get oscillator values for offset
+        float nextSample2 = osc2.nextSample() + 1;
+        float nextSample3 = osc3.nextSample() + 1;
+        float nextSample4 = osc4.nextSample() + 1;
             
-        float mod1 = 440 + nextSample1*100* width;
-        float mod2 = 440 + nextSample2*100* width;
-        float mod3 = 440 + nextSample3*100* width;
-        float mod4 = 440 + nextSample4*100* width;
+        float width = smoothWidth.getNextValue();
+        float mod1 = 440 + nextSample1 * 150 * width;
+        float mod2 = 440 + nextSample2 * 150 * width;
+        float mod3 = 440 + nextSample3 * 150 * width;
+        float mod4 = 440 + nextSample4 * 150 * width;
         float l_xn = buffer.getReadPointer(0)[i]; // raw audio
         
         float l_yn1 = leftBuffer.getSample(mod1); // delay line audio
@@ -243,8 +249,9 @@ void A_chorus_linesAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
         leftBuffer.addSample(l_combined); // update delay line
         
         // write to output buffer
+        float mix = smoothMix.getNextValue();
         buffer.getWritePointer(0)[i] =
-        l_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)* mix/2.25;
+        l_xn*(1 - mix) + (l_yn1+l_yn2+l_yn3+l_yn4)* mix/2.2;
             
         }
     }
@@ -282,8 +289,9 @@ void A_chorus_linesAudioProcessor::setStateInformation (const void* data, int si
     if (xmlState.get() != nullptr and xmlState -> hasTagName(treeState.state.getType()))
         {
             treeState.replaceState(ValueTree::fromXml(*xmlState));
-            smoothWidth.setValue(*treeState.getRawParameterValue("width"),true);
-            //this method is apparently deprecated, but works. It forces the value to the tree value immediately, instead of interpolating.
+            smoothWidth.setCurrentAndTargetValue(*treeState.getRawParameterValue("width"));
+            smoothMix.setCurrentAndTargetValue(*treeState.getRawParameterValue("mix"));
+           
         }
 
 }

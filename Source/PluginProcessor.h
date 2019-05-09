@@ -57,7 +57,7 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     AudioProcessorValueTreeState treeState;
-    LinearSmoothedValue<float> smoothWidth;
+    SmoothedValue<float, ValueSmoothingTypes::Linear> smoothWidth, smoothMix;
 private:
     Oscillator osc1, osc2, osc3, osc4;
     FractionalDelayBuffer leftBuffer, rightBuffer;
